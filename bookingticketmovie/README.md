@@ -1,5 +1,5 @@
 # Trang web đặt vé xem phim - Reactjs
-![Booking Ticket Movie](/frontend/public/images/bookingmovie.png
+![Booking Ticket Movie](/frontend/public/images/bookingmovie.png)
 
 * Ngôn ngữ chính: JavaScript ( ES6 )
 

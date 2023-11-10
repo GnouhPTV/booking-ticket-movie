@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import useRoute from '../hooks/useRoute';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import useRoute from '../../hooks/useRoute';
 import {
   kiemTraDinhDang,
   kiemTraDoDai,
   kiemTraRong,
-} from '../utils/validation';
-import { SwalConfig } from '../utils/config';
-import { DangKy } from '../services/UserService';
+} from '../../utils/validation';
+import { SwalConfig } from '../../utils/config';
+import { DangKy } from '../../services/UserService';
+import { GROUPID } from '../../utils/constant';
 
 export default function Register() {
   const { navigate } = useRoute();
@@ -20,7 +21,7 @@ export default function Register() {
       hoTen: '',
       email: '',
       soDt: '',
-      maNhom: 'GP00',
+      maNhom: GROUPID,
     },
     err: {
       taiKhoan: '',

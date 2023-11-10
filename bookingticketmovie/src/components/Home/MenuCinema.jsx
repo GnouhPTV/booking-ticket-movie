@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 import moment from 'moment';
 import { useLocation } from 'react-router-dom';
+import useRoute from '../../hooks/useRoute';
 
 export default function MenuCinema(props) {
   const location = useLocation();
+  const { navigate } = useRoute();
 
   useEffect(() => {
     if (location.hash) {
@@ -22,10 +24,6 @@ export default function MenuCinema(props) {
   const renderDanhSachPhim = (itemRap) => {
     let danhSachPhim = [];
     itemRap.danhSachPhim.forEach((itemPhim, iPhim) => {
-      let ngayChieu = [];
-      itemPhim.lstLichChieuTheoPhim.forEach((itemLichChieu, i) => {
-        ngayChieu.push(itemLichChieu.ngayChieuGioChieu);
-      });
       danhSachPhim.push({
         label: (
           <div className="flex border-b pb-4">
@@ -47,20 +45,28 @@ export default function MenuCinema(props) {
                 {itemPhim.tenPhim}
               </h2>
               <div className="grid grid-cols-2 gap-1">
-                {ngayChieu?.slice(0, 4).map((itemNgayChieu, indexNgayChieu) => (
-                  <button
-                    onClick={() => alert(itemPhim.tenPhim)}
-                    key={indexNgayChieu}
-                    className="bg-gray-100 hover:bg-gray-300 border-2 text-white font-bold py-2 px-4 rounded"
-                  >
-                    <span className="text-green-500">
-                      {moment(itemNgayChieu).format('DD-MM-YYYY ~ ')}
-                    </span>
-                    <span className="text-orange-500">
-                      {moment(itemNgayChieu).format('hh:mm A')}
-                    </span>
-                  </button>
-                ))}
+                {itemPhim.lstLichChieuTheoPhim
+                  ?.slice(0, 4)
+                  .map((itemLichChieu, indexNgayChieu) => (
+                    <button
+                      onClick={() =>
+                        navigate(`booking/${itemLichChieu.maLichChieu}`)
+                      }
+                      key={indexNgayChieu}
+                      className="bg-gray-100 hover:bg-gray-300 border-2 text-white font-bold py-2 px-4 rounded"
+                    >
+                      <span className="text-green-500">
+                        {moment(itemLichChieu.ngayChieuGioChieu).format(
+                          'DD-MM-YYYY ~ '
+                        )}
+                      </span>
+                      <span className="text-orange-500">
+                        {moment(itemLichChieu.ngayChieuGioChieu).format(
+                          'hh:mm A'
+                        )}
+                      </span>
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
@@ -124,10 +130,7 @@ export default function MenuCinema(props) {
   return (
     <>
       {heThongRapChieu.length ? (
-        <div
-          id="menuCinema"
-          className="container MenuCinemaTabs hidden lg:block my-8"
-        >
+        <div id="menuCinema" className="MenuCinemaTabs hidden lg:block my-8">
           <Tabs
             className="shadow-xl pt-3"
             tabPosition="left"

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LayThongTinLichChieuHeThongRap } from '../../services/CinemaServiec';
 
 const initialState = {
   heThongRapChieu: [],

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import moment from 'moment';
+import useRoute from '../../hooks/useRoute';
 
 export default function ShowtimeDetail(props) {
   const { heThongRapChieu } = props;
+  const { navigate } = useRoute();
 
   const renderDanhSachLichChieu = (itemRap) => {
     let danhSachLichChieu = [];
@@ -11,7 +13,7 @@ export default function ShowtimeDetail(props) {
       danhSachLichChieu.push({
         label: (
           <button
-            onClick={() => alert(itemLichChieu.maLichChieu)}
+            onClick={() => navigate(`/booking/${itemLichChieu.maLichChieu}`)}
             className="bg-gray-100 mt-[-1rem] hover:bg-gray-300 border-2 text-white font-bold py-2 px-4 rounded inline-block"
           >
             <span className="text-green-500">
@@ -105,7 +107,9 @@ export default function ShowtimeDetail(props) {
                     {itemCumRap.lichChieuPhim?.map((itemLich, iLich) => (
                       <button
                         key={iLich}
-                        onClick={() => alert(itemLich.maLichChieu)}
+                        onClick={() =>
+                          navigate(`/booking/${itemLich.maLichChieu}`)
+                        }
                         className="bg-gray-100 hover:bg-gray-300 border-2 text-white font-bold py-1 rounded"
                       >
                         <span className="text-green-500">

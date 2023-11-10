@@ -4,10 +4,14 @@ import { GROUPID } from '../utils/constant';
 export const LayDanhSachPhim = () =>
   http.get(`/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUPID}`, null);
 
-export const LayThongTinLichChieu = (value) =>
-  http.get(
-    `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${value}`
-  );
-
 export const LayThongTinPhimChiTiet = (id) =>
   http.get(`/QuanLyPhim/LayThongTinPhim?MaPhim=${id}`);
+
+export const themPhimUpload = (formData) =>
+  http.post(`/QuanLyPhim/ThemPhimUploadHinh`, formData);
+
+export const capNhatPhimUpload = (formData) =>
+  http.post(`/QuanLyPhim/CapNhatPhimUpload`, formData);
+
+export const xoaPhim = (maPhim) =>
+  http.delete(`/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`);

@@ -92,7 +92,7 @@ export default function HomeCarousel() {
                   <iframe
                     id="videoId"
                     className="w-full h-full rounded-xl"
-                    src={dataVideoModal}
+                    src={`https://www.youtube.com/embed/${dataVideoModal}`}
                     allowFullScreen
                   ></iframe>
                 </Modal>

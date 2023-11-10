@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, InputNumber, Switch } from 'antd';
+import { DatePicker, Form, Input, InputNumber, Switch } from 'antd';
 import React from 'react';
 import { useFormik } from 'formik';
 import moment from 'moment';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { themPhimApi } from '../../../redux/reducers/FilmReducer';
 import { useDispatch } from 'react-redux';
 import { GROUPID } from '../../../utils/constant';
+import { SwalConfig } from '../../../utils/config';
 
 export default () => {
   const [imgSrc, setImgSrc] = useState(null);
@@ -24,18 +25,28 @@ export default () => {
     },
     onSubmit: (value) => {
       value.maNhom = GROUPID;
-
-      // tạo đối tượng formData
-      let formData = new FormData();
-      for (let key in value) {
-        if (key !== 'hinhAnh') {
-          formData.append(key, value[key]);
-        } else {
-          formData.append('File', value.hinhAnh, value.hinhAnh.name);
+      let { tenPhim, trailer, moTa, ngayKhoiChieu, danhGia } = value;
+      if (
+        tenPhim !== '' &&
+        trailer !== '' &&
+        moTa !== '' &&
+        ngayKhoiChieu !== '' &&
+        danhGia !== ''
+      ) {
+        // tạo đối tượng formData
+        let formData = new FormData();
+        for (let key in value) {
+          if (key !== 'hinhAnh') {
+            formData.append(key, value[key]);
+          } else {
+            formData.append('File', value.hinhAnh, value.hinhAnh.name);
+          }
         }
+        dispatch(themPhimApi(formData));
+        setImgSrc('');
+      } else {
+        SwalConfig('Vui lòng điền đầy đủ thông tin', 'error', true);
       }
-      dispatch(themPhimApi(formData));
-      setImgSrc('');
     },
   });
 

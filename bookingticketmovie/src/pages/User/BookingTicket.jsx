@@ -1,218 +1,71 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { LOCALSTORAGE_USER } from '../../utils/constant';
-import { getLocalStorage, SwalConfig } from '../../utils/config';
-import useRoute from '../../hooks/useRoute';
-import LoadingPage from '../LoadingPage';
-import { LayDanhSachPhongVeService } from '../../services/BookingManager';
+import React from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  datGhe,
-  layDanhSachPhongVe,
-  xoaDanhSachGheDangDat,
-} from '../../redux/reducers/BookingReducer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faUserTag } from '@fortawesome/free-solid-svg-icons';
-import _ from 'lodash';
-import { DatVe } from '../../services/BookingManager';
-import { ThongTinDatVe } from '../../_core/models/ThongTinDatVe';
+import { callApiThongTinNguoiDung } from '../../redux/reducers/UserReducer';
+import NotFound from '../NotFound';
 import { Tabs } from 'antd';
-import {
-  callApiThongTinNguoiDung,
-  setUserInfor,
-} from '../../redux/reducers/UserReducer';
 import moment from 'moment';
-import { LayThongTinTaiKhoan } from '../../services/UserService';
+import _ from 'lodash';
 
-const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
-  const dispatch = useDispatch();
-  const { danhSachGhe, thongTinPhim } = useSelector(
-    (state) => state.BookingReducer.chiTietPhongVe
-  );
-  const { danhSachGheDangDat } = useSelector((state) => state.BookingReducer);
-  const { danhSachGheKhachDat } = useSelector((state) => state.BookingReducer);
-  const renderSeats = () => {
-    return danhSachGhe.map((itemGhe, index) => {
-      let classGheVip = itemGhe.loaiGhe == 'Vip' ? 'gheVip' : '';
-      let classGheDaDat = itemGhe.daDat == true ? 'gheDaDat' : '';
-      let classGheDangDat = '';
-      let daDat = itemGhe.daDat ? true : false;
-      // kiểm tra ghế trong danh sách có trùng với ghế trong danh sách ghế đang đặt ko? -> set css cho ghế đang đặt
-      const indexGheDangDat = danhSachGheDangDat.findIndex(
-        (itemGheDangDat) => itemGheDangDat.maGhe == itemGhe.maGhe
-      );
-      if (indexGheDangDat !== -1) {
-        classGheDangDat = 'gheDangDat';
-      }
-      // kiểm tra taiKhoan của account này có trùng với taiKhoan của ghế nào ko ? -> set css cho ghế dc account này đặt
-      let classGheDaDuocTaiKhoanDat = '';
-      if (thongTinNguoiDung.taiKhoan == itemGhe.taiKhoanNguoiDat) {
-        classGheDaDuocTaiKhoanDat = 'gheDaDuocTaiKhoanNayDat';
-      }
-      return (
-        <Fragment key={index}>
-          <button
-            disabled={daDat}
-            onClick={() => dispatch(datGhe(itemGhe))}
-            className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocTaiKhoanDat}`}
-          >
-            {itemGhe.daDat ? (
-              classGheDaDuocTaiKhoanDat == '' ? (
-                <FontAwesomeIcon icon={faXmark} />
-              ) : (
-                <FontAwesomeIcon icon={faUserTag} />
-              )
-            ) : (
-              itemGhe.stt
-            )}
-          </button>
-          {(index + 1) % 16 == 0 ? <br /> : ''}
-        </Fragment>
-      );
-    });
-  };
-  const callApiDatVe = async () => {
-    try {
-      // tạo 1 thongTinDatVe thông qua đối tượng tạo sẵn (gồm maLichChieu và danhSachGhe), do backEnd yêu cầu phải gửi như thế
-      // bên cạnh đó, khi gửi nếu ghế ko có dữ liệu thì vẫn có thông tin, ko bị lỗi ko đáng có
-      const thongTinDatVe = new ThongTinDatVe();
-      thongTinDatVe.maLichChieu = id;
-      thongTinDatVe.danhSachVe = danhSachGheDangDat;
-      // trong lúc pending thì gọi loading page
-      setIsLoading(true);
-      // gọi tới service DatVe với tham số là thongTinDatVe
-      await DatVe(thongTinDatVe);
-      // hiển thị alert thông báo thành công
-      SwalConfig('Đặt vé thành công', 'success');
-      // xóa các ghế trong danh sách ghế đang đặt
-      dispatch(xoaDanhSachGheDangDat());
-      // đặt vé thành công thì gọi api để load lại phòng vé
-      const result = await LayDanhSachPhongVeService(id);
-      dispatch(layDanhSachPhongVe(result.data.content));
-      // load lại lịch sử ghế đã đặt của account này luôn, vì lịch sử đặt dc trả về từ ThongTinTaiKhoan
-      const apiNguoiDung = await LayThongTinTaiKhoan();
-      dispatch(setUserInfor(apiNguoiDung.data.content));
-      // khi xong hết thì dừng trạng thái loading page
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const ThongTinNguoiDung = (thongTinNguoiDung) => {
   return (
-    <div className="container min-h-[100vh]">
-      <div className="grid grid-cols-12 z-[1] pb-2">
-        <div className="col-span-9">
-          <div className="flex justify-center relative mb-2">
-            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[2] uppercase font-bold tracking-wider text-white">
-              Screen
-            </div>
-            <div className="trapezoid"></div>
+    <div className="h-[100vh] relative">
+      <section className="p-6 bg-gray-500 w-full md:w-[80%] lg:w-[60%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-lg">
+        <h2 className="text-white font-bold text-2xl mb-4">
+          Thông tin tài khoản
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div>
+            <p className="font-semibold text-[17px] mb-1">Tài khoản</p>
+            <input
+              readOnly
+              type="text"
+              value={thongTinNguoiDung?.taiKhoan}
+              className="p-2 border-none w-full rounded-sm text-[16px]"
+            />
           </div>
-          <div className="text-center">{renderSeats()}</div>
-          <div className="mt-5 flex justify-center">
-            <table className="divide-y divide-gray-200 w-2/3">
-              <thead className="bg-gray-50 p-5">
-                <tr>
-                  <th>Ghế đã đặt</th>
-                  <th>Ghế thường</th>
-                  <th>Ghế vip</th>
-                  <th>Ghế đang chọn</th>
-                  <th>Ghế được tài khoản này đặt</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr className="text-center">
-                  <td>
-                    <button className="ghe gheDaDat">
-                      <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                  </td>
-                  <td>
-                    <button className="ghe"></button>
-                  </td>
-                  <td>
-                    <button className="ghe gheVip"></button>
-                  </td>
-                  <td>
-                    <button className="ghe gheDangDat"></button>
-                  </td>
-                  <td>
-                    <button className="ghe gheDaDuocTaiKhoanNayDat">
-                      <FontAwesomeIcon icon={faUserTag} />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div>
+            <p className="font-semibold text-[17px] mb-1">Email</p>
+            <input
+              readOnly
+              type="text"
+              value={thongTinNguoiDung?.email}
+              className="p-2 border-none w-full rounded-sm text-[16px]"
+            />
           </div>
-        </div>
-        <div className="col-span-3">
-          <h3 className="text-orange-500 text-center text-2xl">
-            {danhSachGheDangDat
-              .reduce((tong, ghe) => {
-                return (tong += ghe.giaVe);
-              }, 0)
-              .toLocaleString()}{' '}
-            VND
-          </h3>
-          <hr />
-          <div className="my-5">
-            <h3 className="text-lg mb-2 tracking-wide font-semibold">
-              {thongTinPhim.tenPhim}
-            </h3>
-            <p className="mb-2">
-              {thongTinPhim.tenCumRap} - {thongTinPhim.tenRap}
-            </p>
-            <p className="mb-2">Địa điểm: {thongTinPhim.diaChi}</p>
-            <p>
-              Ngày chiếu: {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu}
-            </p>
+          <div>
+            <p className="font-semibold text-[17px] mb-1">Số điện thoại</p>
+            <input
+              readOnly
+              type="text"
+              value={thongTinNguoiDung?.soDT}
+              className="p-2 border-none w-full rounded-sm text-[16px]"
+            />
           </div>
-          <hr />
-          <div className="flex flex-row my-5 items-center">
-            <div className="flex flex-wrap items-center ">
-              <span className="text-black font-semibold text-lg">Ghế: </span>
-              {_.sortBy(danhSachGheDangDat, ['stt'])?.map(
-                (itemGheDangChon, indexGheDangChon) => (
-                  <span
-                    key={indexGheDangChon}
-                    className="mb-2 text-orange-600 font-semibold text-lg mx-1 border-2 px-2 border-orange-100"
-                  >
-                    {itemGheDangChon.stt}
-                  </span>
-                )
-              )}
-            </div>
+          <div>
+            <p className="font-semibold text-[17px] mb-1">Họ tên</p>
+            <input
+              readOnly
+              type="text"
+              value={thongTinNguoiDung?.hoTen}
+              className="p-2 border-none w-full rounded-sm text-[16px]"
+            />
           </div>
-          <hr />
-          <div className="my-5">
-            <h2>Email</h2>
-            {thongTinNguoiDung.email}
-          </div>
-          <hr />
-          <div className="my-5">
-            <h2>Phone</h2>
-            {thongTinNguoiDung.soDT}
-          </div>
-          <hr />
-          <div className="mb-0 cursor-pointer">
-            <div
-              onClick={() => {
-                if (danhSachGheDangDat == '') {
-                  return SwalConfig('Vui lòng chọn ghế', 'warning', true);
-                } else {
-                  callApiDatVe();
-                }
-              }}
-              className="bg-orange-400 hover:bg-orange-600 text-white w-full text-center py-3 font-bold text-xl"
-            >
-              ĐẶT VÉ
-            </div>
+          <div>
+            <p className="font-semibold text-[17px] mb-1">Loại tài khoản</p>
+            <input
+              readOnly
+              type="text"
+              value={thongTinNguoiDung?.maLoaiNguoiDung}
+              className="p-2 border-none w-full rounded-sm text-[16px]"
+            />
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
+
 const KetQuaDatVe = (thongTinNguoiDung) => {
   const renderTicketItem = () => {
     return thongTinNguoiDung.thongTinDatVe?.map((item, index) => {
@@ -233,8 +86,7 @@ const KetQuaDatVe = (thongTinNguoiDung) => {
                 {_.first(item.danhSachGhe).tenCumRap}
               </h2>
               <p className="text-gray-500">
-                Ngày giờ chiếu:{' '}
-                {moment(item.ngayDat).format('DD-MM-YYYY ~ hh:MM:A')}
+                Ngày đặt: {moment(item.ngayDat).format('DD-MM-YYYY ~ hh:MM:A')}
               </p>
               <p className="text-gray-500">
                 Thời lượng: {item.thoiLuongPhim} phút
@@ -273,47 +125,42 @@ const KetQuaDatVe = (thongTinNguoiDung) => {
     </div>
   );
 };
+
 export default () => {
-  const { thongTinNguoiDung, tabActive } = useSelector(
+  const { thongTinNguoiDung, isLogin } = useSelector(
     (state) => state.UserReducer
   );
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-  const { param, navigate } = useRoute();
+
   useEffect(() => {
     dispatch(callApiThongTinNguoiDung);
-    if (!getLocalStorage(LOCALSTORAGE_USER)) {
-      navigate('/login');
-    } else {
-      const callApiPhongVe = async () => {
-        const result = await LayDanhSachPhongVeService(param.id);
-        dispatch(layDanhSachPhongVe(result.data.content));
-        setIsLoading(false);
-      };
-      callApiPhongVe();
-    }
-    return () => {
-      dispatch(xoaDanhSachGheDangDat());
-    };
   }, []);
+
   const items = [
     {
-      label: '01. CHỌN GHẾ & ĐẶT VÉ',
+      label: (
+        <span className="text-[11px] sm:text-[14px]">
+          01. THÔNG TIN NGƯỜI DÙNG
+        </span>
+      ),
       key: 1,
-      children: BookingTicket(thongTinNguoiDung, param.id, setIsLoading),
+      children: ThongTinNguoiDung(thongTinNguoiDung),
     },
     {
-      label: '02. KẾT QUẢ ĐẶT VÉ',
+      label: (
+        <span className="text-[11px] sm:text-[14px]">02. LỊCH SỬ ĐẶT VÉ</span>
+      ),
       key: 2,
       children: KetQuaDatVe(thongTinNguoiDung),
     },
   ];
+
   return (
     <>
-      {isLoading ? (
-        <LoadingPage />
+      {isLogin ? (
+        <Tabs className="pt-[6rem] min-h-[100vh] booking" items={items} />
       ) : (
-        <Tabs className="mt-[6rem]  pb-2 min-h-[100vh] booking" items={items} />
+        <NotFound />
       )}
     </>
   );

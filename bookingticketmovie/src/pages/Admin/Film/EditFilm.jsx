@@ -6,7 +6,6 @@ import { useState } from 'react';
 import {
   callApiThongTinPhim,
   capNhatPhim,
-  themPhimApi,
 } from '../../../redux/reducers/FilmReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { GROUPID } from '../../../utils/constant';
@@ -17,7 +16,7 @@ export default () => {
   const { thongTinPhim } = useSelector((state) => state.FilmReducer);
   const [imgSrc, setImgSrc] = useState('');
   const dispatch = useDispatch();
-  const { param, navigate } = useRoute();
+  const { param } = useRoute();
   const dateFormat = 'DD/MM/YYYY';
   useEffect(() => {
     dispatch(callApiThongTinPhim(param.id));

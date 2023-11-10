@@ -29,7 +29,7 @@ export default function MovieList(props) {
       className="movie-list container mx-auto md:px-8 lg:px-10"
     >
       {/* Laptop */}
-      <BookingTicketNow />
+      <BookingTicketNow arrFilm={arrFilm} />
       <Tabs
         className="hidden md:block"
         defaultActiveKey="1"

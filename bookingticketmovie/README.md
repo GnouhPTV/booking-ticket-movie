@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Trang web đặt vé xem phim - Reactjs
+![Booking Ticket Movie](/frontend/public/images/bookingmovie.png
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* Ngôn ngữ chính: JavaScript ( ES6 )
 
-## Available Scripts
+* Library chính: Reactjs ( React Hook )
 
-In the project directory, you can run:
+* Library, Framework và công nghệ khác được dùng: 
+    + React-redux & @reduxjs/toolkit
+    + React-router-dom
+    + React-slick
+    + Lodash   
+    + Moment
+    + Formik
+    + Ant Design
+    + Tailwind Css
+    + Animate.css
+    + Sweetalert2
+    + SASS ( node-sass )
+    + Fontawesome
 
-### `npm start`
+=======================================
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Tất cả các trang đều được Responsive
+* RESTful API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Giao diện và chức năng phía NGƯỜI DÙNG: 
+    - Trang chủ 
+        + Chức năng đặt vé nhanh
+        + Hiển thị danh sách phim đang chiếu và sắp chiếu
+        + Danh sách các hệ thống rạp và cụm rạp
+    - Trang chi tiết phim
+        + Hiển thị thông tin cụ thể của phim
+        + Hiển thị rạp và ngày giờ chiếu của phim
+    - Trang đăng ký (form validation)
+        + Các trường dữ liệu không được rỗng
+        + Tài khoản không có khoảng cách
+        + Họ tên không được có chữ số
+        + Email phải đúng định dạng
+        + Số điện thoại phải là chữ số và đủ 10 số
+        + Mật khẩu từ 6 đến 50 ký tự, có chữ thường, chữ hoa, số, ký tự đặc biệt 
+    - Trang đăng nhập (form validation)
+        + Các trường dữ liệu không được rỗng
+        + Tài khoản không có khoảng cách
+        + Mật khẩu từ 6 đến 50 ký tự
+        + Đăng nhập xong load lại trang vẫn giữ trạng thái đăng nhập
+    - Trang đặt vé
+        + Cần đăng nhập mới vào được trang đặt vé 
+        + Hiển thị danh sách ghế và trạng thái của ghế 
+        + Trạng thái ghế: đã đặt, đang chọn, chưa đặt, ghế đã được tài khoản này đặt
+        + Hiển thị tổng tiền
+        + Chức năng đặt vé và cập nhật vào lịch sử đặt vé
+    - Trang thông tin người dùng
+        + Cần đăng nhập mới vào được trang thông tin 
+        + Hiển thị thông tin người dùng
+    - Trang lịch sử đặt vé
+        + Hiển thị ghế, tên phim, tên rạp của các vé đã đặt
+    - Trang not found
+        + Trang hiển thị khi người dùng vào sai đường dẫn
+    - Trang tin tức 
+    - Trang dowload app
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Giao diện và chức năng phía QUẢN TRỊ: 
+    - Chỉ tài khoản quản trị mới vào được trang admin
+    - Quản lý phim:  
+        + Thêm phim
+        + Cập nhật phim
+        + Thêm lịch chiếu cho phim
+        + Xóa phim
+    - Quản lý người dùng
+        + Thêm người dùng
+        + Cập nhật thông tin người dùng
+        + Xóa người dùng

@@ -13,7 +13,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setStatusLogin } from '../../redux/reducers/UserReducer';
 import { LOCALSTORAGE_USER } from '../../utils/constant';
-
 export default () => {
   const isLogin = useSelector((state) => state.UserReducer.isLogin);
   const dispatch = useDispatch();
@@ -145,6 +144,22 @@ export default () => {
             </NavLink>
           </li>
           <li className="mr-3">
+            <Link
+              to="/#movie-list"
+              className="inline-block py-2 px-4 text-black font-medium md:text-base hover:text-red-600 no-underline"
+            >
+              Lịch chiếu
+            </Link>
+          </li>
+          <li className="mr-3">
+            <Link
+              className="inline-block no-underline text-black font-medium md:text-base hover:text-red-600 hover:text-underline py-2 px-4"
+              to="/#menuCinema"
+            >
+              Cụm rạp
+            </Link>
+          </li>
+          <li className="mr-3">
             <NavLink
               className="block no-underline text-black font-medium text-base hover:text-red-600 hover:text-underline py-2 px-4"
               to="news"
@@ -207,8 +222,8 @@ export default () => {
                   to="/#movie-list"
                   className="inline-block py-2 px-4 text-black font-medium md:text-base hover:text-red-600 no-underline"
                 >
-                  Phim
-                </Link>
+                  Lịch chiếu
+                </NavLink>
               </li>
               <li className="mr-3">
                 <Link

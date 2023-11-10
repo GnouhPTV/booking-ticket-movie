@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserLogin } from '../../redux/reducers/UserReducer';
 import { LayThongTinTaiKhoan } from '../../services/UserService';
 import { LOCALSTORAGE_USER } from '../../utils/constant';
-
 export default () => {
   const userData = getLocalStorage(LOCALSTORAGE_USER);
   const isLogin = useSelector((state) => state.UserReducer.isLogin);
@@ -34,7 +33,6 @@ export default () => {
       }
     };
     callApiThongTinTaiKhoan();
-
     document.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
         document.getElementById('navBarHeader').style.background =
@@ -44,17 +42,13 @@ export default () => {
       }
     });
   }, []);
-
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
-
   const text = <span>Đăng xuất</span>;
-
   return (
     <>
       <Drawer
@@ -149,34 +143,26 @@ export default () => {
         <ul className="list-reset justify-center flex-1 items-center mt-2">
           <li className="mr-3">
             <NavLink
+              to="/"
               className="block py-2 px-4 text-black font-medium text-base hover:text-red-600 no-underline"
-              to=""
             >
               Lịch chiếu
             </NavLink>
           </li>
           <li className="mr-3">
-            <Link
-              to="/#movie-list"
-              className="inline-block py-2 px-4 text-black font-medium md:text-base hover:text-red-600 no-underline"
-            >
-              Lịch chiếu
-            </Link>
-          </li>
-          <li className="mr-3">
-            <Link
-              className="inline-block no-underline text-black font-medium md:text-base hover:text-red-600 hover:text-underline py-2 px-4"
-              to="/#menuCinema"
+            <NavLink
+              className="block no-underline text-black font-medium text-base hover:text-red-600 hover:text-underline py-2 px-4"
+              to="/"
             >
               Cụm rạp
-            </Link>
+            </NavLink>
           </li>
           <li className="mr-3">
             <NavLink
               className="block no-underline text-black font-medium text-base hover:text-red-600 hover:text-underline py-2 px-4"
-              to=""
+              to="news"
             >
-              Ứng dụng
+              Tin tức
             </NavLink>
           </li>
         </ul>
@@ -184,6 +170,7 @@ export default () => {
 
       <header className="bg-gray-400 font-sans leading-normal tracking-normal">
         <nav
+          style={{ borderBottom: '1px solid #c1c0c04a' }}
           id="navBarHeader"
           className="transition-all duration-500 flex items-center justify-between flex-wrap bg-white py-2 px-4 fixed w-full z-10 top-0"
         >
@@ -229,25 +216,25 @@ export default () => {
           >
             <ul className="list-reset lg:flex justify-center flex-1 items-center mb-0">
               <li className="mr-3">
-                <NavLink
+                <Link
+                  to="/#movie-list"
                   className="inline-block py-2 px-4 text-black font-medium md:text-base hover:text-red-600 no-underline"
-                  to=""
                 >
                   Lịch chiếu
-                </NavLink>
+                </Link>
               </li>
               <li className="mr-3">
-                <NavLink
+                <Link
                   className="inline-block no-underline text-black font-medium md:text-base hover:text-red-600 hover:text-underline py-2 px-4"
-                  to=""
+                  to="/#menuCinema"
                 >
                   Cụm rạp
-                </NavLink>
+                </Link>
               </li>
               <li className="mr-3">
                 <NavLink
                   className="inline-block no-underline text-black font-medium md:text-base hover:text-red-600 hover:text-underline py-2 px-4"
-                  to=""
+                  to="news"
                 >
                   Tin tức
                 </NavLink>
@@ -255,7 +242,7 @@ export default () => {
               <li className="mr-3">
                 <NavLink
                   className="inline-block no-underline text-black font-medium md:text-base hover:text-red-600 hover:text-underline py-2 px-4"
-                  to=""
+                  to="aboutapp"
                 >
                   Ứng dụng
                 </NavLink>

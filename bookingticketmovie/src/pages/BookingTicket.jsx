@@ -22,7 +22,6 @@ import {
 } from '../redux/reducers/UserReducer';
 import moment from 'moment';
 import { LayThongTinTaiKhoan } from '../services/UserService';
-import { connection } from '..';
 
 const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
   const dispatch = useDispatch();
@@ -37,7 +36,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
       let classGheDaDat = itemGhe.daDat == true ? 'gheDaDat' : '';
       let classGheDangDat = '';
       let daDat = itemGhe.daDat ? true : false;
-
       // kiểm tra ghế trong danh sách có trùng với ghế trong danh sách ghế đang đặt ko? -> set css cho ghế đang đặt
       const indexGheDangDat = danhSachGheDangDat.findIndex(
         (itemGheDangDat) => itemGheDangDat.maGhe == itemGhe.maGhe
@@ -50,21 +48,12 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
       if (thongTinNguoiDung.taiKhoan == itemGhe.taiKhoanNguoiDat) {
         classGheDaDuocTaiKhoanDat = 'gheDaDuocTaiKhoanNayDat';
       }
-      // kiểm tra từng ghế xem có phải người khác đang đặt hay không
-      let classGheKhachDat = '';
-      let indexGheKD = danhSachGheKhachDat.findIndex(
-        (gheKD) => gheKD.maGhe == itemGhe.maGhe
-      );
-      if (indexGheKD !== -1) {
-        classGheKhachDat = 'gheKhachDat';
-      }
-
       return (
         <Fragment key={index}>
           <button
-            disabled={daDat | (classGheKhachDat !== '')}
+            disabled={daDat}
             onClick={() => dispatch(datGhe(itemGhe))}
-            className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocTaiKhoanDat} ${classGheKhachDat}`}
+            className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocTaiKhoanDat}`}
           >
             {itemGhe.daDat ? (
               classGheDaDuocTaiKhoanDat == '' ? (
@@ -81,7 +70,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
       );
     });
   };
-
   const callApiDatVe = async () => {
     try {
       // tạo 1 thongTinDatVe thông qua đối tượng tạo sẵn (gồm maLichChieu và danhSachGhe), do backEnd yêu cầu phải gửi như thế
@@ -109,14 +97,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    // load danh sách ghế đang đặt từ server về
-    connection.on('loadDanhSachGheDaDat', (dsGheKhachDat) => {
-      console.log('danhSachGheKhachDat', dsGheKhachDat);
-    });
-  }, []);
-
   return (
     <div className="container min-h-[100vh]">
       <div className="grid grid-cols-12 z-[1] pb-2">
@@ -137,7 +117,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
                   <th>Ghế vip</th>
                   <th>Ghế đang chọn</th>
                   <th>Ghế được tài khoản này đặt</th>
-                  <th>Ghế người khác đang đặt</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -160,9 +139,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
                     <button className="ghe gheDaDuocTaiKhoanNayDat">
                       <FontAwesomeIcon icon={faUserTag} />
                     </button>
-                  </td>
-                  <td>
-                    <button className="ghe gheNguoiKhacDangDat"></button>
                   </td>
                 </tr>
               </tbody>
@@ -237,7 +213,6 @@ const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
     </div>
   );
 };
-
 const KetQuaDatVe = (thongTinNguoiDung) => {
   const renderTicketItem = () => {
     return thongTinNguoiDung.thongTinDatVe?.map((item, index) => {
@@ -298,7 +273,6 @@ const KetQuaDatVe = (thongTinNguoiDung) => {
     </div>
   );
 };
-
 export default () => {
   const { thongTinNguoiDung, tabActive } = useSelector(
     (state) => state.UserReducer
@@ -306,7 +280,6 @@ export default () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const { param, navigate } = useRoute();
-
   useEffect(() => {
     dispatch(callApiThongTinNguoiDung);
     if (!getLocalStorage(LOCALSTORAGE_USER)) {
@@ -323,7 +296,6 @@ export default () => {
       dispatch(xoaDanhSachGheDangDat());
     };
   }, []);
-
   const items = [
     {
       label: '01. CHỌN GHẾ & ĐẶT VÉ',

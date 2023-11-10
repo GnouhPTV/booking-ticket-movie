@@ -1,27 +1,27 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { LOCALSTORAGE_USER } from '../utils/constant';
-import { getLocalStorage, SwalConfig } from '../utils/config';
-import useRoute from '../hooks/useRoute';
-import LoadingPage from './LoadingPage';
-import { LayDanhSachPhongVeService } from '../services/BookingManager';
+import { LOCALSTORAGE_USER } from '../../utils/constant';
+import { getLocalStorage, SwalConfig } from '../../utils/config';
+import useRoute from '../../hooks/useRoute';
+import LoadingPage from '../LoadingPage';
+import { LayDanhSachPhongVeService } from '../../services/BookingManager';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   datGhe,
   layDanhSachPhongVe,
   xoaDanhSachGheDangDat,
-} from '../redux/reducers/BookingReducer';
+} from '../../redux/reducers/BookingReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import { DatVe } from '../services/BookingManager';
-import { ThongTinDatVe } from '../_core/models/ThongTinDatVe';
+import { DatVe } from '../../services/BookingManager';
+import { ThongTinDatVe } from '../../_core/models/ThongTinDatVe';
 import { Tabs } from 'antd';
 import {
   callApiThongTinNguoiDung,
   setUserInfor,
-} from '../redux/reducers/UserReducer';
+} from '../../redux/reducers/UserReducer';
 import moment from 'moment';
-import { LayThongTinTaiKhoan } from '../services/UserService';
+import { LayThongTinTaiKhoan } from '../../services/UserService';
 
 const BookingTicket = (thongTinNguoiDung, id, setIsLoading) => {
   const dispatch = useDispatch();

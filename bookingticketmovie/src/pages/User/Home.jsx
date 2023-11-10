@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import MovieList from '../components/Home/MovieList';
-import HomeCarousel from '../components/Home/HomeCarousel';
-import MenuCinema from '../components/Home/MenuCinema';
-import LoadingPage from './LoadingPage';
+import MovieList from '../../components/Home/MovieList';
+import HomeCarousel from '../../components/Home/HomeCarousel';
+import MenuCinema from '../../components/Home/MenuCinema';
+import LoadingPage from '../LoadingPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilmList } from '../redux/reducers/FilmReducer';
-import { LayHeThongRapChieu } from '../redux/reducers/CinemaReducer';
-import { history } from '../utils/history';
-import { LayDanhSachPhim } from '../services/FilmService';
-import { LayThongTinLichChieuHeThongRap } from '../services/CinemaService';
+import { getFilmList } from '../../redux/reducers/FilmReducer';
+import { LayHeThongRapChieu } from '../../redux/reducers/CinemaReducer';
+import { history } from '../../utils/history';
+import { LayDanhSachPhim } from '../../services/FilmService';
+import { LayThongTinLichChieuHeThongRap } from '../../services/CinemaService';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);

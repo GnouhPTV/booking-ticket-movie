@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import useRoute from '../hooks/useRoute';
+import useRoute from '../../hooks/useRoute';
 import { Progress, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   callApiLichChieuTheoPhim,
   getfilmDetail,
-} from '../redux/reducers/FilmReducer';
-import LoadingPage from './LoadingPage';
+} from '../../redux/reducers/FilmReducer';
+import LoadingPage from '../LoadingPage';
 import moment from 'moment';
-import { history } from '../utils/history';
-import { getModalVideo } from '../redux/reducers/BannerReducer';
-import { LayThongTinPhimChiTiet } from '../services/FilmService';
-import ShowtimeDetail from '../components/Detail/ShowtimeDetail';
+import { history } from '../../utils/history';
+import { getModalVideo } from '../../redux/reducers/BannerReducer';
+import { LayThongTinPhimChiTiet } from '../../services/FilmService';
+import ShowtimeDetail from '../../components/Detail/ShowtimeDetail';
 
 export default function Detail() {
   const [isLoadingDetail, setIsLoadingDetail] = useState(true);

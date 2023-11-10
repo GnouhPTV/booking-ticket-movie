@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import useRoute from '../hooks/useRoute';
+import useRoute from '../../hooks/useRoute';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import {
   kiemTraDinhDang,
   kiemTraDoDai,
   kiemTraRong,
-} from '../utils/validation';
-import { SwalConfig } from '../utils/config';
-import { DangKy } from '../services/UserService';
+} from '../../utils/validation';
+import { SwalConfig } from '../../utils/config';
+import { DangKy } from '../../services/UserService';
 
 export default function Register() {
   const { navigate } = useRoute();

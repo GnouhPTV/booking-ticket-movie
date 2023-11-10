@@ -79,8 +79,8 @@ export default function Detail() {
                   {filmDetail.tenPhim}
                 </h2>
                 <p className="text-gray-300 tracking-wide text-justify">
-                  {filmDetail.moTa.length > 400
-                    ? filmDetail.moTa.slice(0, 400) + '...'
+                  {filmDetail.moTa.length > 300
+                    ? filmDetail.moTa.slice(0, 300) + '...'
                     : filmDetail.moTa}
                 </p>
                 <p className="font-bold text-white mt-2">

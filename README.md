@@ -1,6 +1,6 @@
 # booking-ticket-movie
 
-![Booking Ticket Movie](bookingticketmovie/frontend/public/images/bookingmovie.png)
+![BookingTicketMovie](/bookingticketmovie/frontend/public/images/bookingmovie.png)
 
 # Trang web đặt vé xem phim - Reactjs
 * Ngôn ngữ chính: JavaScript ( ES6 )

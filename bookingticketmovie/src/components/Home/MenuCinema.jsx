@@ -130,10 +130,7 @@ export default function MenuCinema(props) {
   return (
     <>
       {heThongRapChieu.length ? (
-        <div
-          id="menuCinema"
-          className="container MenuCinemaTabs hidden lg:block my-8"
-        >
+        <div id="menuCinema" className="MenuCinemaTabs hidden lg:block my-8">
           <Tabs
             className="shadow-xl pt-3"
             tabPosition="left"

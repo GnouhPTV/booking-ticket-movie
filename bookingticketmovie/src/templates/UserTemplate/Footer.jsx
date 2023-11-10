@@ -96,7 +96,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://www.facebook.com/dinhtrithuc01"
+                  href="https://www.facebook.com/lethanhphuong2010/"
                   target="_blank"
                   className="text-zinc-300 title-widget-item"
                 >

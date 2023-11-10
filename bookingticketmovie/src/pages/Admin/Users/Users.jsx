@@ -86,13 +86,6 @@ export default function Users() {
       },
     },
     {
-      title: 'Mật khẩu',
-      dataIndex: 'matKhau',
-      render: (text, user) => {
-        return user.matKhau;
-      },
-    },
-    {
       title: 'Loại người dùng',
       dataIndex: 'loaiNguoiDung',
       render: (text, user) => {
